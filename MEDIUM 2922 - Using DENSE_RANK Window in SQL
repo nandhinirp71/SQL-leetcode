@@ -1,0 +1,16 @@
+WITH cte AS
+(SELECT o.seller_id, COUNT(DISTINCT o.item_id) AS num_items
+FROM orders o
+INNER JOIN users u USING (seller_id)
+INNER JOIN items i USING (item_id)
+WHERE u.favorite_brand <> i.item_brand
+GROUP BY o.seller_id),
+
+cte2 AS
+(SELECT *, DENSE_RANK() OVER(ORDER BY num_items DESC) AS rnk
+FROM cte)
+
+SELECT * 
+FROM cte2 
+WHERE rnk=1 
+ORDER BY seller_id;
