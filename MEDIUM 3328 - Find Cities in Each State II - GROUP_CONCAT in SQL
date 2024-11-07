@@ -1,3 +1,25 @@
+SQL SCHEMA:
+
+Create table if not exists cities( state varchar(100),city varchar(100))
+Truncate table cities
+insert into cities (state, city) values ('New York', 'New York City')
+insert into cities (state, city) values ('New York', 'Newark')
+insert into cities (state, city) values ('New York', 'Buffalo')
+insert into cities (state, city) values ('New York', 'Rochester')
+insert into cities (state, city) values ('California', 'San Francisco')
+insert into cities (state, city) values ('California', 'Sacramento')
+insert into cities (state, city) values ('California', 'San Diego')
+insert into cities (state, city) values ('California', 'Los Angeles')
+insert into cities (state, city) values ('Texas', 'Tyler')
+insert into cities (state, city) values ('Texas', 'Temple')
+insert into cities (state, city) values ('Texas', 'Taylor')
+insert into cities (state, city) values ('Texas', 'Dallas')
+insert into cities (state, city) values ('Pennsylvania', 'Philadelphia')
+insert into cities (state, city) values ('Pennsylvania', 'Pittsburgh')
+insert into cities (state, city) values ('Pennsylvania', 'Pottstown')
+
+QUERY:
+
 WITH cte AS 
 (SELECT *, 
 CASE WHEN LEFT(LOWER(city), 1) = LEFT(LOWER(state), 1) THEN 1 ELSE 0 END AS same 
