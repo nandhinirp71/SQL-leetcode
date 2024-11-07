@@ -1,0 +1,17 @@
+WITH cte AS 
+(SELECT *, 
+CASE WHEN LEFT(LOWER(city), 1) = LEFT(LOWER(state), 1) THEN 1 ELSE 0 END AS same 
+FROM cities),
+
+cte2 AS
+(SELECT state, 
+GROUP_CONCAT(city ORDER BY city SEPARATOR ', ') AS cities, SUM(city) 
+AS matching_letter_count 
+FROM cte 
+GROUP BY state 
+HAVING COUNT(city) >=3)
+
+SELECT state, cities, matching_letter_count 
+FROM cte2 WHERE matching_letter_count >= 1 
+ORDER BY matching_letter_count DESC, state;
+
