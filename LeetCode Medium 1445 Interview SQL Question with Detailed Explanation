@@ -1,0 +1,9 @@
+WITH CTE AS (
+SELECT * FROM sales ORDER BY sale_date, fruit
+),
+
+cte2 AS (
+select *, LEAD(sold_num,1) OVER(PARTITION BY sale_date) AS orange_num from cte
+)
+
+SELECT sale_date, orange_sum - sold_num AS diff FROM cte WHERE orange_num is not null order by sale_date;
