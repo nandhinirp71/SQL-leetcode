@@ -1,0 +1,20 @@
+WITH cte AS
+
+(SELECT year, 'Wimbledon' AS championship, Wimbledon as player_id 
+FROM championships 
+UNION 
+SELECT year, 'Fr_open' AS championship, Fr_open as player_id 
+FROM championships 
+UNION 
+SELECT year, 'US_open' AS championship, US_open as player_id 
+FROM championships 
+UNION 
+SELECT year, 'Au_open' AS championship, Au_open as player_id 
+FROM championships),
+
+cte2 AS 
+(SELECT player_id, COUNT(player_id) AS grand_slams_count FROM cte GROUP BY player_id) 
+
+SELECT c.player_id, p.player_name, c.grand_slams_count FROM cte2 c LEFT JOIN player p ON c.player_id=p.player_id;
+
+
