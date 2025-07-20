@@ -1,0 +1,7 @@
+WITH cte AS
+(SELECT customer_id, product_id, COUNT(*) as num_ordered FROM orders GROUP BY customer_id, product_id) 
+
+WITH cte2 AS 
+(SELECT *, FIRST_VALUE(num_ordered) OVER(PARTITION BY customer_id ORDER BY num_ordereed DESC) AS most_frequent)
+
+SELECT c.customer_id, c.product_id, p.product_name FROM cte2 LEFT JOIN products p ON P.id=c.product_id WHERE c.num_ordered=c.most_frequent;
