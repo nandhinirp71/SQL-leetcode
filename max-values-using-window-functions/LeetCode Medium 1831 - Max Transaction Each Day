@@ -1,0 +1,7 @@
+WITH cte AS
+(SELECT transaction_id, DATE_FORMAT(day, "%Y-%m-%d") AS day, amount FROM transactions) 
+
+WITH cte2 AS 
+(SELECT *, MAX(amount) OVER(PARTITION BY DATE) AS max_amount FROM cte) 
+
+SELECT transaction_id from cte2  WHERE amount = max_amount ORDER BY transaction_id;
